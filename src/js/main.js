@@ -22,6 +22,7 @@ const router = (async function () {
     element.textContent = i18n.getMessage(element.dataset.i18n, ...element.children);
   });
   document.documentElement.lang = i18n.getMessage('locale');
+  document.title = "Lexile Level Adjuster";
 }()).then(() => {
   const router = new Router({
     list: new ListPage(),

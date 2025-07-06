@@ -11,8 +11,8 @@ export default {
   locale: 'en',
   localeName: 'English',
 
-  title: 'tReader',
-  titleWithName: '{0} - tReader',
+  title: 'Lexile Level Adjuster',
+  titleWithName: '{0} - Lexile Level Adjuster',
 
   listFilterClear: 'Clear Search',
   listSortTitle: 'Sort by',
