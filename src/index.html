@@ -45,7 +45,11 @@ defined by the Mozilla Public License, v. 2.0.
 <style id="custom_css"></style>
 </head>
 <body>
-<div class="pages" id="pages">
+  <div id="welcome-screen" class="welcome-screen">
+    <h1>Welcome to Lexile Level Adjuster</h1>
+    <button id="start-button" class="start-button">Click to start</button>
+  </div>
+  <div class="pages" id="pages">
   <div class="page" id="list_page">
     <input id="file" type="file" accept="text/plain,application/gzip" tabindex="-1" aria-hidden="true" />
     <div id="file_list_container" class="file-list-container scroll" tabindex="-1">

@@ -54,4 +54,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+document.getElementById('start-button').addEventListener('click', function() {
+  document.getElementById('welcome-screen').style.display = 'none';
+  document.getElementById('pages').style.display = 'block';
+});
+
 
