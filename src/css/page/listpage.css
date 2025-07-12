@@ -83,20 +83,72 @@ button.list-sort {
   overflow-y: hidden;
 }
 
+.file-list-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 15px;
+}
+
+.file-item-card {
+  background: var(--card-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .file-list-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .file-list-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .file-list-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.file-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .file-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--list-title-color);
-  line-height: 35px;
+  font-size: 20px;
   margin: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  color: var(--card-title-color);
 }
 
 .file-comment {
-  line-height: 25px;
-  font-size: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--card-text-color);
+}
+
+.file-date {
+  color: var(--card-meta-color);
+}
+
+.file-detail {
+  color: var(--card-meta-color);
 }
 
 .file-date {

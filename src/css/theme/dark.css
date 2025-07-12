@@ -53,3 +53,9 @@
   --alert-text: #fff;
 }
 
+:root {
+  --card-background: #ffffff;
+  --card-title-color: #333333;
+  --card-text-color: #555555;
+  --card-meta-color: #888888;
+}
