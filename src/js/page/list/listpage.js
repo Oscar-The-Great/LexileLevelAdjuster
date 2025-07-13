@@ -148,7 +148,42 @@ export default class ListPage extends Page {
     try {
       this.importTip.style.display = 'block';
       const raw_content = await text.readFile(item);
-      const content = await text.preprocess(raw_content);
+      
+      // Get current lexile level from user (simplified for example)
+      const currentLexile = prompt('Enter your current Lexile level:');
+      if (!currentLexile) return;
+      
+      // Call DeepSeek API for Lexile adjustment
+      const apiResponse = await fetch('https://api.deepseek.com/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer sk-4f71f7b2b6c246f0a6392acae42c0ed1'
+        },
+        body: JSON.stringify({
+          model: 'deepseek-chat',
+          messages: [
+            {
+              role: 'system',
+              content: `You're a Lexile level adjuster. You will take JSON input like this:\n{\n    'passage': The original passage,\n    'current_lexile_level': The lexile level number user provided\n}\n\nThe output should also be JSON ONLY like this:\n{\n    'adjusted_passage': The adjusted passage,\n    'hard_words': Words that have higher lexile level than Current_Lexile_Level (include their definitions)\n}\n\nThe adjusted passage should refer to (current_lexile_level + 50).\nThe hard_words should be extracted from adjusted_passage.`
+            },
+            {
+              role: 'user',
+              content: JSON.stringify({
+                passage: raw_content,
+                current_lexile_level: parseInt(currentLexile)
+              })
+            }
+          ],
+          stream: false
+        })
+      });
+      
+      const adjustedData = await apiResponse.json();
+      const adjustedContent = adjustedData.choices[0].message.content;
+      
+      // Process the adjusted content
+      const content = await text.preprocess(adjustedContent);
       const raw_title = text.parseFilename(item.name);
       const title = await text.preprocess(raw_title);
       result = await file.add({ title, content });
