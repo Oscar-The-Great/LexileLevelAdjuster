@@ -182,8 +182,78 @@ export default class ListPage extends Page {
       const adjustedData = await apiResponse.json();
       const adjustedContent = adjustedData.choices[0].message.content;
       
+      // Parse the JSON content from the API response
+      let parsedContent;
+      try {
+        // Remove markdown code block markers if present
+        let jsonContent = adjustedContent;
+        // Check for markdown code block format and clean it
+        if (jsonContent.startsWith('```')) {
+          // Remove the opening ```json or ``` and the closing ```
+          jsonContent = jsonContent.replace(/^```(?:json)?\s*/, '');
+          jsonContent = jsonContent.replace(/\s*```$/, '');
+        }
+        parsedContent = JSON.parse(jsonContent);
+      } catch (error) {
+        console.error('Failed to parse API response:', error);
+        console.error('Response content:', adjustedContent);
+        alert('Error processing the response. Please try again.');
+        return;
+      }
+      
+      // Extract the adjusted passage and hard words
+      const { adjusted_passage, hard_words } = parsedContent;
+      
+      // Create container for the results
+      const resultContainer = document.createElement('div');
+      resultContainer.className = 'lexile-adjustment-results';
+      
+      // Display the adjusted passage
+      const passageSection = document.createElement('div');
+      passageSection.className = 'adjusted-passage-section';
+      passageSection.innerHTML = `
+        <h3>Adjusted Passage</h3>
+        <div class="adjusted-passage-content">${adjusted_passage}</div>
+      `;
+      resultContainer.appendChild(passageSection);
+      
+      // Display the hard words as a table
+      const hardWordsSection = document.createElement('div');
+      hardWordsSection.className = 'hard-words-section';
+      hardWordsSection.innerHTML = `
+        <h3>Hard Words</h3>
+        <table class="hard-words-table">
+          <thead>
+            <tr>
+              <th>Word</th>
+              <th>Definition</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${Object.entries(hard_words).map(([word, definition]) => `
+              <tr>
+                <td>${word}</td>
+                <td>${definition}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+      resultContainer.appendChild(hardWordsSection);
+      
+      // Clear previous results and append the new ones
+      const existingResults = document.querySelector('.lexile-adjustment-results');
+      if (existingResults) {
+        existingResults.remove();
+      }
+      
+      // Append the results to the appropriate container in your page
+      // Assuming there's a container with id 'results-container'
+      const container = document.getElementById('results-container') || document.body;
+      container.appendChild(resultContainer);
+      
       // Process the adjusted content
-      const content = await text.preprocess(adjustedContent);
+      const content = await text.preprocess(adjusted_passage);
       const raw_title = text.parseFilename(item.name);
       const title = await text.preprocess(raw_title);
       result = await file.add({ title, content });
@@ -295,5 +365,3 @@ export default class ListPage extends Page {
     files.sort(cmp);
   }
 }
-
-
