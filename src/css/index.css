@@ -11,16 +11,189 @@
 @import "./icons/icons.css";
 @import "./common/input.css";
 @import "./common/main.css";
-@import "./page/listpage.css";
-@import "./page/readpage.css";
-@import "./page/flipreadpage.css";
-@import "./page/scrollreadpage.css";
-@import "./page/configpage.css";
+@import "./page/list.css";
+@import "./page/read.css";
+@import "./page/config.css";
+
+/* Modern Theme Enhancements */
+
+/* Typography improvements for clean, readable feel */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* Clean background for light theme */
+.light-theme body {
+  background: var(--default-background);
+}
+
+/* Dark theme specific enhancements */
+.dark-theme {
+  background: var(--background-color);
+  color: var(--default-color);
+}
+
+.dark-theme body {
+  background: var(--background-color);
+  color: var(--default-color);
+}
+
+.dark-theme .card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.dark-theme .card:hover {
+  background: var(--card-hover);
+  box-shadow: 0 4px 12px var(--shadow-medium);
+  transform: translateY(-1px);
+}
+
+.dark-theme button {
+  background: var(--button-background);
+  color: var(--default-color);
+  border: 1px solid var(--border-color);
+}
+
+.dark-theme button:hover {
+  background: var(--button-hover);
+  border-color: var(--accent-color);
+}
+
+.dark-theme button.primary {
+  background: var(--button-primary);
+  color: white;
+  border-color: var(--button-primary);
+}
+
+.dark-theme button.primary:hover {
+  background: var(--button-primary-hover);
+}
+
+/* Enhanced button styling with modern feel */
+button {
+  font-family: inherit;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+}
+
+.light-theme button:hover {
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
+  transform: translateY(-1px);
+}
+
+.dark-theme .scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.dark-theme .scroll::-webkit-scrollbar-track {
+  background: var(--surface-color);
+  border-radius: 6px;
+}
+
+.dark-theme .scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 6px;
+  border: 2px solid var(--surface-color);
+}
+
+.dark-theme .scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
+}
+
+/* Modern card styling */
+.light-theme .file-item-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.light-theme .file-item-card:hover {
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Enhanced header with modern styling */
+.header-line {
+  font-family: inherit;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.light-theme .header-line {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .header-line {
+  background: linear-gradient(180deg, var(--header-background) 0%, #1a1a0e 100%);
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Modern input styling */
+input, textarea {
+  font-family: inherit;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+}
+
+.light-theme input:focus, 
+.light-theme textarea:focus {
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: var(--active-color);
+  outline: none;
+}
+
+.dark-theme input:focus, 
+.dark-theme textarea:focus {
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+  border-color: var(--active-color);
+}
+
+/* Enhanced reading area */
+.read-text-page {
+  font-family: var(--read-font-family);
+  font-size: var(--read-font-size);
+  line-height: var(--read-line-height);
+}
+
+.light-theme .read-text-page {
+  background: var(--read-light-background-color);
+  color: var(--read-light-text-color);
+}
+
+.dark-theme .read-text-page {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Modern scrollbar styling */
+.light-theme .scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.light-theme .scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.light-theme .scroll::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.light-theme .scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--active-color);
+}
 
 #pages, 
 #pages .page, 
 #pages .read-layer {
-  background-color: #dccc98 !important;
+  background-color: var(--default-background) !important;
 }
 
 #pages {
@@ -37,28 +210,45 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #f0f0f0;
+  background: var(--default-background);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  color: black;
+  color: var(--default-color);
+  font-family: inherit;
 }
 
 .welcome-screen h1 {
   font-size: 3rem;
+  font-weight: 300;
   margin-bottom: 2rem;
-  color: black;
+  color: var(--default-color);
+  text-align: center;
 }
 
 .start-button {
   padding: 1rem 2rem;
-  background-color: white;
+  background: var(--active-color);
   border: none;
-  border-radius: 4px;
-  font-size: 1.2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-family: inherit;
+  font-weight: 500;
   cursor: pointer;
-  color: black;
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
 }
 
+.start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+}
+
+/* Page specific styles for our multi-page setup */
+.page {
+  margin-top: 3rem; /* Add space for the navigation header */
+  min-height: calc(100vh - 3rem); /* Adjust for the header */
+}

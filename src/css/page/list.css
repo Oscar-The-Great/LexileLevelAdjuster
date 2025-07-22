@@ -1,0 +1,119 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * This Source Code Form is "Incompatible With Secondary Licenses", as
+ * defined by the Mozilla Public License, v. 2.0.
+ */
+
+.file-list-container {
+  height: calc(var(--window-height) - 50px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#file {
+  position: absolute;
+  top: -1000px;
+}
+
+#file_list_sensor {
+  height: 1px;
+  margin-bottom: 1px;
+  position: fixed;
+  z-index: -2;
+  visibility: hidden;
+}
+
+.list-filter {
+  padding-right: 40px;
+  position: relative;
+}
+.list-filter-clear {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.list-filter-clear .button-wrap {
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+  color: var(--active-color);
+  line-height: 30px;
+}
+button.list-sort {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  color: inherit;
+  margin: 0 0 0 10px;
+  padding: 0 10px;
+  display: block;
+  height: 52px;
+  line-height: 52px;
+}
+
+.list-sort-title {
+  color: var(--search-title-color);
+  display: inline;
+}
+
+.list-sort-content {
+  margin-left: 10px;
+  display: inline;
+}
+
+.file-item {
+  position: relative;
+}
+
+.file-item:last-child {
+  border-width: 1px 0;
+}
+
+.file-item-content {
+  margin: 0 -15px;
+  padding: 18px 30px;
+  height: 60px;
+  display: block;
+  transition: height, padding ease 0.1s;
+  overflow-y: hidden;
+}
+
+.file-list-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 15px;
+}
+
+.file-item-card {
+  background: var(--card-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .file-list-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .file-list-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .file-list-container {
+    grid-template-columns: 1fr;
+  }
+}

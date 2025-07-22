@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" href="./css/normalize-8.0.1.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/config.css">
+  <title data-i18n="configTitle">Configuration</title>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="header-left">
+        <button class="back-button icon-button" aria-label="Back">
+          <svg class="icon"><use xlink:href="./css/icons/icons.svg#back"></use></svg>
+        </button>
+      </div>
+      <div class="header-title" data-i18n="configTitle">Configuration</div>
+      <div class="header-right"></div>
+    </div>
+    
+    <div class="content">
+      <div class="config-container">
+        <!-- Theme Selection Section -->
+        <div class="config-section">
+          <h2 class="config-section-title" data-i18n="configAppearanceGroupTitle">Appearance</h2>
+          
+          <div class="config-item">
+            <div class="config-item-title" data-i18n="configTheme">Theme</div>
+            <div class="config-item-content">
+              <select id="theme_select" class="config-select">
+                <!-- Options will be populated by JavaScript -->
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Save Button Section -->
+        <div class="config-section">
+          <div class="config-item">
+            <button id="save_config_button" class="config-save-button" data-i18n="configSave">Save Configuration</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module" src="./js/config.js"></script>
+</body>
+</html>

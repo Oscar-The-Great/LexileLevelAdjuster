@@ -9,53 +9,182 @@
 .dark-theme {
   color-scheme: dark;
 
-  --default-background: #005c80;
-  --default-color: #fff;
-  --active-color: #dcb13d;
+  /* Google Material Design 3 - Dark Theme Color Tokens */
+  
+  /* Primary Colors */
+  --primary: #a8c7fa;
+  --on-primary: #001c38;
+  --primary-container: #004881;
+  --on-primary-container: #d3e3fd;
 
-  --header-background: #171717;
+  /* Secondary Colors */
+  --secondary: #bbc7db;
+  --on-secondary: #263141;
+  --secondary-container: #3c4858;
+  --on-secondary-container: #d7e3f8;
 
-  --highlight-background: #ffffff50;
-  --border-color: #3d3d3d;
+  /* Tertiary Colors */
+  --tertiary: #dbbce0;
+  --on-tertiary: #3e2844;
+  --tertiary-container: #563e5c;
+  --on-tertiary-container: #f8d8fe;
 
-  --search-title-color: #808080;
-  --list-title-color: #f0f0f0;
-  --list-comment-color: #98989e;
-  --list-detail-color: #59595e;
-  --list-active-background: #1e1e1e;
+  /* Error Colors */
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
 
-  --menu-background: #323232;
-  --menu-color: #fff;
+  /* Surface Colors */
+  --surface: #101418;
+  --on-surface: #e2e2e9;
+  --surface-variant: #44474f;
+  --on-surface-variant: #c4c7cf;
+  --surface-container-lowest: #0b0f14;
+  --surface-container-low: #191c20;
+  --surface-container: #1d2024;
+  --surface-container-high: #272a2f;
+  --surface-container-highest: #32353a;
 
-  --search-placeholder: #98989e;
-  --search-background: #1e1e1e;
+  /* Background Colors */
+  --background: #101418;
+  --on-background: #e2e2e9;
 
-  --tabber-color: #98989e;
-  --tabber-active-color: #fff;
-  --tabber-background: #1e1e1e;
-  --tabber-active-background: #515151;
+  /* Outline Colors */
+  --outline: #8e9199;
+  --outline-variant: #44474f;
 
-  --range-lower-color: #5a595e;
-  --range-upper-color: #424146;
-  --range-thumb-color: #fff;
-  --range-thumb-border-color: #fff;
+  /* Shadow and Elevation */
+  --shadow: #000000;
+  --surface-tint: #a8c7fa;
+  --elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  --elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.3);
+  --elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 
-  --config-background: #000;
-  --config-title-color: #8f8e93;
-  --config-content-color: #fff;
-  --config-item-background: #1c1c1e;
+  /* Legacy Variables for Compatibility */
+  --background-color: var(--background);
+  --default-background: var(--background);
+  --default-color: var(--on-background);
+  --active-color: var(--primary);
+  --header-background: var(--surface-container-low);
+  --header-color: var(--on-surface);
+  --header-text: var(--on-surface);
+  --border-color: var(--outline-variant);
+  --card-background: #1e3a5f;
 
-  --remove-background: #eb5545;
-  --remove-color: #fff;
+  /* Surface variations for different elevations */
+  --surface-color: var(--surface-container);
+  --surface-hover: var(--surface-container-high);
+  --card-hover: var(--surface-container-high);
 
-  --alert-cover-background: #0007;
-  --alert-background: #262626;
-  --alert-text: #fff;
+  /* Text Colors */
+  --secondary-color: var(--on-surface-variant);
+  --muted-color: var(--outline);
+  --accent-color: var(--primary);
+  --accent-hover: var(--primary-container);
+
+  /* Reading-specific colors */
+  --read-light-text-color: var(--on-surface);
+  --read-light-background-color: var(--surface);
+  --reading-background: var(--surface);
+  --reading-text: var(--on-surface);
+  --reading-accent: var(--primary);
+
+  /* UI elements */
+  --highlight-background: rgba(168, 199, 250, 0.12);
+  --selection-background: rgba(168, 199, 250, 0.2);
+
+  /* Text hierarchy */
+  --search-title-color: var(--on-surface-variant);
+  --list-title-color: var(--on-surface);
+  --list-comment-color: var(--on-surface-variant);
+  --list-detail-color: var(--outline);
+  --list-active-background: var(--secondary-container);
+
+  /* Menu styling */
+  --menu-background: var(--surface-container);
+  --menu-color: var(--on-surface);
+
+  /* Search elements */
+  --search-placeholder: var(--on-surface-variant);
+  --search-background: var(--surface-container);
+
+  /* Tab styling */
+  --tabber-color: var(--on-surface-variant);
+  --tabber-active-color: var(--on-primary);
+  --tabber-background: var(--surface-container);
+  --tabber-active-background: var(--primary);
+
+  /* Interactive Elements */
+  --button-background: var(--surface-container);
+  --button-hover: var(--surface-container-high);
+  --button-active: var(--surface-container-highest);
+  --button-primary: var(--primary);
+  --button-primary-hover: var(--primary-container);
+  --button-text: var(--on-surface);
+
+  /* Input Fields */
+  --input-background: var(--surface-container);
+  --input-border: var(--outline);
+  --input-focus: var(--primary);
+  --input-text: var(--on-surface);
+  --input-placeholder: var(--on-surface-variant);
+
+  /* Configuration */
+  --config-background: var(--background);
+  --config-title-color: var(--on-surface);
+  --config-content-color: var(--on-surface);
+  --config-item-background: var(--surface-container-low);
+
+  /* Actions */
+  --remove-background: var(--error);
+  --remove-color: var(--on-error);
+
+  /* Status Colors */
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --info-color: var(--primary);
+
+  /* Alerts */
+  --alert-cover-background: rgba(16, 20, 24, 0.8);
+  --alert-background: var(--surface-container-high);
+  --alert-text: var(--on-surface);
+
+  /* Shadows with appropriate opacity for dark theme */
+  --shadow-light: rgba(0, 0, 0, 0.4);
+  --shadow-medium: rgba(0, 0, 0, 0.6);
+  --shadow-heavy: rgba(0, 0, 0, 0.8);
+
+  /* State layers for interactive elements */
+  --state-hover-opacity: 0.08;
+  --state-focus-opacity: 0.12;
+  --state-pressed-opacity: 0.12;
+  --state-dragged-opacity: 0.16;
+
+  /* Borders and Dividers */
+  --border-light: var(--outline-variant);
+  --divider-color: var(--outline-variant);
 }
 
-:root {
-  --card-background: #ffffff;
-  --card-title-color: #333333;
-  --card-text-color: #555555;
-  --card-meta-color: #888888;
+/* Dark theme specific overrides for better contrast */
+.dark-theme {
+  /* Enhanced contrast for better readability */
+  --card-title-color: var(--on-surface);
+  --card-text-color: var(--on-surface-variant);
+  --card-meta-color: var(--outline);
+}
+
+/* Dark theme state layer effects */
+.dark-theme .interactive-element:hover {
+  background-color: rgba(168, 199, 250, var(--state-hover-opacity));
+}
+
+.dark-theme .interactive-element:focus {
+  background-color: rgba(168, 199, 250, var(--state-focus-opacity));
+}
+
+.dark-theme .interactive-element:active {
+  background-color: rgba(168, 199, 250, var(--state-pressed-opacity));
 }

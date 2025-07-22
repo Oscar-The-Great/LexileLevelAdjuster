@@ -1,0 +1,20 @@
+{
+  "name": "lexile-level-adjuster",
+  "version": "1.0.0",
+  "description": "An application that adjusts text to target Lexile levels",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

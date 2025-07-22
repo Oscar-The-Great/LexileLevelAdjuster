@@ -1,0 +1,200 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * This Source Code Form is "Incompatible With Secondary Licenses", as
+ * defined by the Mozilla Public License, v. 2.0.
+ */
+
+.config-page {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--window-width);
+  background: var(--config-background);
+}
+
+.config-page-content {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.config-page-content::before {
+  content: " ";
+  display: block;
+  margin-bottom: 35px;
+}
+
+#config_page_webpage .config-page-content::before {
+  display: none;
+}
+
+.config-section {
+  margin: 35px 0;
+}
+
+.config-group {
+  background: var(--config-item-background);
+  overflow: hidden;
+}
+
+.config-title,
+.config-item-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--config-title-color);
+  margin: 0;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--config-border-color);
+}
+
+.config-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--config-border-color);
+  min-height: 50px;
+}
+
+.config-item:last-child {
+  border-bottom: none;
+}
+
+.config-item-label {
+  flex: 1;
+  font-size: 14px;
+  color: var(--config-text-color);
+  margin-right: 15px;
+}
+
+.config-item-control {
+  flex-shrink: 0;
+}
+
+.config-item input,
+.config-item select,
+.config-item button {
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--config-border-color);
+  border-radius: 4px;
+  background: var(--config-input-background);
+  color: var(--config-input-color);
+}
+
+.config-item input:focus,
+.config-item select:focus {
+  outline: none;
+  border-color: var(--config-focus-color);
+  box-shadow: 0 0 0 2px rgba(var(--config-focus-rgb), 0.2);
+}
+
+.config-item button {
+  cursor: pointer;
+  background: var(--config-button-background);
+  color: var(--config-button-color);
+  border: 1px solid var(--config-button-border);
+}
+
+.config-item button:hover {
+  background: var(--config-button-hover-background);
+}
+
+.config-item button:active {
+  background: var(--config-button-active-background);
+}
+
+.config-description {
+  font-size: 12px;
+  color: var(--config-description-color);
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+/* Range input styling */
+.config-item .range-input {
+  width: 200px;
+}
+
+/* Color picker styling */
+.config-item .color-picker {
+  width: 150px;
+}
+
+/* Toggle switch styling */
+.config-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.config-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.config-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--config-toggle-background);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.config-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.config-toggle input:checked + .config-toggle-slider {
+  background-color: var(--config-toggle-active-background);
+}
+
+.config-toggle input:checked + .config-toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .config-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .config-item-label {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .config-item-control {
+    width: 100%;
+  }
+  
+  .config-item input,
+  .config-item select {
+    width: 100%;
+  }
+}

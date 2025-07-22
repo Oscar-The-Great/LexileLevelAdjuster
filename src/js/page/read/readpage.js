@@ -120,7 +120,12 @@ export default class ReadPage extends Page {
     await this.textPage.onActivate({ id });
 
     document.addEventListener('keydown', this.keyboardEvents);
-    this.router.setTitle(this.meta.title, this.getLang());
+    if (this.router) {
+      this.router.setTitle(this.meta.title, this.getLang());
+    } else {
+      // Fallback when router is not available
+      document.title = `${this.meta.title} - Lexile Level Adjuster`;
+    }
 
     this.subPages.forEach(page => { page.onActivate(); });
     this.updateSideIndex();
@@ -146,7 +151,12 @@ export default class ReadPage extends Page {
     this.textPage.onInactivate();
     this.textPage = null;
     this.container.classList.remove('read-page-scroll', 'read-page-flip');
-    this.router.setTitle();
+    if (this.router) {
+      this.router.setTitle();
+    } else {
+      // Fallback when router is not available
+      document.title = '';
+    }
   }
   gotoList() {
     this.router.go('list');
@@ -341,4 +351,3 @@ export default class ReadPage extends Page {
     setTimeout(() => { URL.revokeObjectURL(url); }, 10e3);
   }
 }
-

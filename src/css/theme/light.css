@@ -9,53 +9,174 @@
 .light-theme {
   color-scheme: light;
 
-  --default-background: #fff;
-  --default-color: #000;
-  --active-color: #c1752b;
+  /* Google Material Design 3 - Light Theme Color Tokens */
+  
+  /* Primary Colors */
+  --primary: #1976d2;
+  --on-primary: #ffffff;
+  --primary-container: #d3e3fd;
+  --on-primary-container: #001c38;
 
-  --header-background: #f2f1f6;
+  /* Secondary Colors */
+  --secondary: #545f71;
+  --on-secondary: #ffffff;
+  --secondary-container: #d7e3f8;
+  --on-secondary-container: #111c2b;
 
-  --highlight-background: #00000030;
-  --border-color: #c6c6c8;
+  /* Tertiary Colors */
+  --tertiary: #6f5675;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #f8d8fe;
+  --on-tertiary-container: #28132e;
 
-  --search-title-color: #7e7e7e;
-  --list-title-color: #000;
-  --list-comment-color: #878789;
-  --list-detail-color: #bcbcbe;
-  --list-active-background: #f3eddd;
+  /* Error Colors */
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #410002;
 
-  --menu-background: #eeeeee;
-  --menu-color: #deab3e;
+  /* Surface Colors */
+  --surface: #fefbff;
+  --on-surface: #1a1c1e;
+  --surface-variant: #e1e2ec;
+  --on-surface-variant: #44474f;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f4f0f7;
+  --surface-container: #eeeef2;
+  --surface-container-high: #e8e7ec;
+  --surface-container-highest: #e2e1e6;
 
-  --search-placeholder: #848389;
-  --search-background: #e4e3e9;
+  /* Background Colors */
+  --background: #fefbff;
+  --on-background: #1a1c1e;
 
-  --tabber-color: #858587;
-  --tabber-active-color: #fff;
-  --tabber-background: #f4f4f4;
-  --tabber-active-background: #b6b6b8;
+  /* Outline Colors */
+  --outline: #74777f;
+  --outline-variant: #c4c7cf;
 
-  --range-lower-color: #c4c4c4;
-  --range-upper-color: #dedede;
-  --range-thumb-color: #fff;
-  --range-thumb-border-color: #e7e7e7;
+  /* Shadow and Elevation */
+  --shadow: #000000;
+  --surface-tint: #1976d2;
+  --elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --elevation-2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  --elevation-4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.3);
+  --elevation-5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 
-  --config-background: #f2f1f6;
-  --config-title-color: #717176;
-  --config-content-color: #000;
-  --config-item-background: #fff;
+  /* Legacy Variables for Compatibility */
+  --default-background: var(--background);
+  --default-color: var(--on-background);
+  --active-color: var(--primary);
+  --header-background: var(--surface-container-low);
+  --header-color: var(--on-surface);
+  --border-color: var(--outline-variant);
+  --card-background: #e3f2fd;
+  --border-color: var(--outline-variant);
+  --card-background: #e3f2fd;
 
-  --remove-background: #eb4d3d;
-  --remove-color: #fff;
+  /* Reading-specific colors */
+  --read-light-text-color: var(--on-surface);
+  --read-light-background-color: var(--surface);
 
-  --alert-cover-background: #0007;
-  --alert-background: #efefef;
-  --alert-text: #000;
+  /* UI elements */
+  --highlight-background: rgba(25, 118, 210, 0.12);
+  --selection-background: rgba(25, 118, 210, 0.2);
+
+  /* Text hierarchy */
+  --search-title-color: var(--on-surface-variant);
+  --list-title-color: var(--on-surface);
+  --list-comment-color: var(--on-surface-variant);
+  --list-detail-color: var(--outline);
+  --list-active-background: var(--secondary-container);
+
+  /* Menu styling */
+  --menu-background: var(--surface-container);
+  --menu-color: var(--on-surface);
+
+  /* Search elements */
+  --search-placeholder: var(--on-surface-variant);
+  --search-background: var(--surface-container);
+
+  /* Tab styling */
+  --tabber-color: var(--on-surface-variant);
+  --tabber-active-color: var(--on-primary);
+  --tabber-background: var(--surface-container);
+  --tabber-active-background: var(--primary);
+
+  /* Form controls */
+  --input-background: var(--surface-container);
+  --input-border: var(--outline);
+  --input-focus: var(--primary);
+  --input-text: var(--on-surface);
+  --input-placeholder: var(--on-surface-variant);
+
+  /* Button styles */
+  --button-background: var(--surface-container);
+  --button-hover: var(--surface-container-high);
+  --button-active: var(--surface-container-highest);
+  --button-primary: var(--primary);
+  --button-primary-hover: var(--primary-container);
+  --button-text: var(--on-surface);
+
+  /* Configuration */
+  --config-background: var(--background);
+  --config-title-color: var(--on-surface);
+  --config-content-color: var(--on-surface);
+  --config-item-background: var(--surface-container-low);
+
+  /* Actions */
+  --remove-background: var(--error);
+  --remove-color: var(--on-error);
+
+  /* Alerts */
+  --alert-cover-background: rgba(26, 28, 30, 0.4);
+  --alert-background: var(--surface-container-high);
+  --alert-text: var(--on-surface);
+
+  /* State layers for interactive elements */
+  --state-hover-opacity: 0.08;
+  --state-focus-opacity: 0.12;
+  --state-pressed-opacity: 0.12;
+  --state-dragged-opacity: 0.16;
 }
 
 :root {
-  --card-background: #ffffff;
-  --card-title-color: #333333;
-  --card-text-color: #555555;
-  --card-meta-color: #888888;
+  /* Typography scale following Material Design 3 */
+  --display-large: 57px;
+  --display-medium: 45px;
+  --display-small: 36px;
+  --headline-large: 32px;
+  --headline-medium: 28px;
+  --headline-small: 24px;
+  --title-large: 22px;
+  --title-medium: 16px;
+  --title-small: 14px;
+  --label-large: 14px;
+  --label-medium: 12px;
+  --label-small: 11px;
+  --body-large: 16px;
+  --body-medium: 14px;
+  --body-small: 12px;
+
+  /* Reading typography */
+  --read-font-family: 'Roboto', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --read-font-size: var(--body-large);
+  --read-line-height: 1.5;
+
+  /* Border radius following Material Design 3 */
+  --border-radius-none: 0px;
+  --border-radius-xs: 4px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 28px;
+  --border-radius-full: 1000px;
+
+  /* Spacing scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
 }

@@ -13,15 +13,24 @@ const file = {};
 
 export default file;
 
-file.add = async function ({ title, content }) {
+file.add = async function ({ title, content, createTime, lastAccessTime, length, id, serverStored }) {
   const time = new Date();
   const meta = {
     title,
-    createTime: time,
-    lastAccessTime: time,
-    length: content.length,
+    createTime: createTime || time,
+    lastAccessTime: lastAccessTime || time,
+    length: length || (content ? content.length : 0),
+    id,
+    serverStored
   };
-  await storage.files.add(meta, content);
+  
+  // If serverStored is true, don't store content in IndexedDB
+  if (serverStored) {
+    await storage.files.add(meta, '');
+  } else {
+    await storage.files.add(meta, content);
+  }
+  
   return meta;
 };
 
@@ -53,4 +62,3 @@ file.content = async function (id) {
 file.remove = async function (id) {
   return storage.files.remove(id);
 };
-

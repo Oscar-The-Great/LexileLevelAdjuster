@@ -39,16 +39,17 @@ text.readFile = async function (file) {
   if (isCompress) try {
     compressConfigPromise = compressConfigPromise ?? new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = './js/lib/pako@2.1.0/pako_inflate.min.js';
+      script.src = 'https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako_inflate.min.js';
       script.addEventListener('error', event => {
         document.body.removeChild(script);
+        console.warn('Failed to load pako library, gzip files will not be supported');
         reject(script);
       });
       script.addEventListener('load', event => { resolve(); });
       document.body.appendChild(script);
     });
   } catch (e) {
-    alert('load script fail:', e);
+    console.warn('Failed to setup pako library:', e);
     compressConfigPromise = null;
   }
   const [content, encodingListConfig] =
