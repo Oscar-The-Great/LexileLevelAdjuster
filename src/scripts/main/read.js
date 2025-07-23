@@ -13,6 +13,7 @@ import template from '../ui/util/template.js';
 import '../page/common.js';
 import onResize from '../ui/util/onresize.js';
 import wakelock from '../ui/util/wakelock.js';
+import deepseek from '../api/deepseek.js';
 
 // Import JumpPage dependencies manually to avoid circular import
 import RangeInput from '../ui/component/range.js';
@@ -325,7 +326,10 @@ class ReadPageController {
       this.renderStyle = await config.get('view_mode', 'flip');
       this.autoLockConfig = await config.get('auto_lock', 'speech');
       this.screenWidthSideIndex = await config.expert('appearance.screen_width_side_index', 'number', 960);
-      console.log('✅ Configuration loaded');
+      
+      // Get current Lexile Level from config
+      const lexileLevel = await config.get('lexileLevel', 850);
+      console.log('✅ Configuration loaded, Lexile Level:', lexileLevel);
 
       this.articleId = id;
       
@@ -366,12 +370,53 @@ class ReadPageController {
         }
       }
 
-      this.meta = meta;
+      // Process content with DeepSeek Chat
+      console.log('🤖 Processing content with DeepSeek Chat...');
+      let processedContent = content;
+      let generatedTitle = meta?.title || 'Untitled Document';
+      let hardWordsList = [];
+      
+      try {
+        // Run these operations in parallel for better performance
+        const [titleResult, rephraseResult, hardWordsResult] = await Promise.all([
+          // Generate a title if none exists
+          (!meta || !meta.title || meta.title === 'Untitled Document') ? 
+            deepseek.generateTitle(content) : 
+            Promise.resolve(meta?.title || 'Untitled Document'),
+          
+          // Rephrase content according to Lexile Level
+          deepseek.rephraseContent(content, lexileLevel),
+          
+          // Generate hard words list
+          deepseek.generateHardWordList(content, lexileLevel)
+        ]);
+        
+        generatedTitle = titleResult;
+        processedContent = rephraseResult;
+        hardWordsList = hardWordsResult;
+        
+        console.log('✅ DeepSeek Chat processing complete');
+        console.log('📝 Generated title:', generatedTitle);
+        console.log('📚 Hard words list:', hardWordsList.length, 'words');
+        
+        // Update metadata with generated title if needed
+        if (!meta || !meta.title || meta.title === 'Untitled Document') {
+          const updatedMeta = meta || { id };
+          updatedMeta.title = generatedTitle;
+          await file.setMeta(id, updatedMeta);
+          console.log('✅ Updated file metadata with generated title');
+        }
+      } catch (aiError) {
+        console.error('❌ Error processing with DeepSeek Chat:', aiError);
+        // Continue with original content and title if AI processing fails
+      }
+
+      this.meta = meta || { id, title: generatedTitle };
       this.index = index;
-      this.content = content;
+      this.content = processedContent; // Use processed content instead of original
 
       // Split content into pages
-      this.pages = content.split('\n\n').filter(p => p.trim());
+      this.pages = processedContent.split('\n\n').filter(p => p.trim());
       this.cursor = 0;
 
       this.readIndex = {
@@ -425,7 +470,6 @@ class ReadPageController {
 
       // Setup keyboard events and update title
       document.addEventListener('keydown', this.keyboardEvents);
-      // CHANGE TO THIS (with null check):
       const title = this.meta && this.meta.title ? this.meta.title : 'Untitled Document';
       document.title = `${title} - Lexile Level Adjuster`;
             
@@ -433,6 +477,11 @@ class ReadPageController {
       const headerMid = this.container.querySelector('.header-mid');
       if (headerMid) {
         headerMid.textContent = title;
+      }
+
+      // Create and display hard words sidebar if we have words
+      if (hardWordsList && hardWordsList.length > 0) {
+        this.createHardWordsSidebar(hardWordsList);
       }
 
       // Activate sub-pages and update layout
@@ -458,6 +507,72 @@ class ReadPageController {
     } catch (error) {
       console.error('Failed to open file:', error);
       this.handleError('Failed to open file', error);
+    }
+  }
+  
+  /**
+   * Create and display the hard words sidebar
+   * @param {Array<{word: string, definition: string}>} hardWordsList - List of hard words with definitions
+   */
+  createHardWordsSidebar(hardWordsList) {
+    if (!hardWordsList || hardWordsList.length === 0) return;
+    
+    console.log('📝 Creating hard words sidebar with', hardWordsList.length, 'words');
+    
+    try {
+      // Use the template system to create the sidebar
+      const template = window.template;
+      if (!template) {
+        console.error('Template system not available');
+        return;
+      }
+      
+      // Create sidebar from template
+      const sidebar = template.create('hard-words-sidebar');
+      if (!sidebar) {
+        console.error('Hard words sidebar template not found');
+        return;
+      }
+      
+      // Get the list container
+      const listContainer = sidebar.get('hard-words-list');
+      if (!listContainer) {
+        console.error('Hard words list container not found in template');
+        return;
+      }
+      
+      // Add each word to the sidebar
+      hardWordsList.forEach(item => {
+        // Create word item from template
+        const wordItem = template.create('hard-word-item');
+        if (!wordItem) return;
+        
+        // Set word and definition
+        const wordElement = wordItem.get('word');
+        const definitionElement = wordItem.get('definition');
+        
+        if (wordElement) wordElement.textContent = item.word;
+        if (definitionElement) definitionElement.textContent = item.definition;
+        
+        // Add to list
+        listContainer.appendChild(wordItem.element);
+      });
+      
+      // Add toggle functionality
+      const toggleBtn = sidebar.get('toggle-sidebar-btn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          sidebar.element.classList.toggle('collapsed');
+          toggleBtn.textContent = sidebar.element.classList.contains('collapsed') ? '»' : '«';
+        });
+      }
+      
+      // Add sidebar to the page
+      document.querySelector('.read-layer').appendChild(sidebar.element);
+      
+      console.log('✅ Hard words sidebar created successfully');
+    } catch (error) {
+      console.error('Error creating hard words sidebar:', error);
     }
   }
 

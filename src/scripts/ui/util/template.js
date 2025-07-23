@@ -23,8 +23,18 @@ export default template;
  * @returns {Map<string, HTMLElement>}
  */
 template.create = function (name) {
-  const id = name.replace(/[A-Z]/g, c => '_' + c.toLowerCase());
-  const template = allTemplates.get(id);
+  // Try the exact name first, then try with underscore transformation
+  let template = allTemplates.get(name);
+  if (!template) {
+    const id = name.replace(/[A-Z]/g, c => '_' + c.toLowerCase());
+    template = allTemplates.get(id);
+  }
+  
+  if (!template) {
+    console.error(`Template not found: ${name}`);
+    return null;
+  }
+  
   /** @type {DocumentFragment} */
   const content = template.content.cloneNode(true);
   const result = content.firstElementChild;
@@ -56,4 +66,3 @@ template.iconButton = function (type, title = null) {
   button.get('icon').appendChild(icon);
   return button.get('root');
 };
-

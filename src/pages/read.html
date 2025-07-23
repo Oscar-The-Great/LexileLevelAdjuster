@@ -95,6 +95,15 @@ defined by the Mozilla Public License, v. 2.0.
     <div class="read-layer read-text">
       <div id="read_content" class="read-content scroll"></div>
     </div>
+    <div class="hard-words-sidebar">
+      <div class="hard-words-header">
+        <h3>Hard Words</h3>
+        <button class="toggle-sidebar-btn" aria-label="Toggle hard words sidebar">&laquo;</button>
+      </div>
+      <div class="hard-words-list">
+        <!-- Words will be added here dynamically -->
+      </div>
+    </div>
   </div>
 
   <div id="screen_menu" class="screen-menu" role="dialog" aria-modal="true">
@@ -192,6 +201,27 @@ defined by the Mozilla Public License, v. 2.0.
     </div>
   </template>
 
+  <!-- Hard words sidebar template -->
+  <template id="hard-words-sidebar">
+    <div class="hard-words-sidebar">
+      <div class="hard-words-header">
+        <h3>Hard Words</h3>
+        <button class="toggle-sidebar-btn" aria-label="Toggle hard words sidebar">&laquo;</button>
+      </div>
+      <div class="hard-words-list">
+        <!-- Words will be added here dynamically -->
+      </div>
+    </div>
+  </template>
+
+  <!-- Hard word item template -->
+  <template id="hard-word-item">
+    <div class="word-item">
+      <div class="word"></div>
+      <div class="definition"></div>
+    </div>
+  </template>
+
   <!-- Register service worker -->
   <script>
     if ('serviceWorker' in navigator) {
@@ -207,6 +237,7 @@ defined by the Mozilla Public License, v. 2.0.
     }
   </script>
 
+  <script src="/env.js"></script>
   <script src="../scripts/main/read.js" type="module"></script>
 </body>
 </html>

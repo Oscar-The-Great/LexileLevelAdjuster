@@ -103,6 +103,22 @@ defined by the Mozilla Public License, v. 2.0.
     </div>
   </template>
 
+  <!-- Register service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../worker/sw.js', { scope: '/worker/' })
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+  </script>
+
+  <script src="/env.js"></script>
   <script src="../scripts/main/list.js" type="module"></script>
 </body>
 </html>

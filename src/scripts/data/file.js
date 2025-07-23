@@ -42,7 +42,17 @@ file.getMeta = async function (id) {
   return storage.files.getMeta(id);
 };
 
-file.setMeta = async function (meta) {
+file.setMeta = async function (id, meta) {
+  // Handle both old and new function signature
+  if (typeof id === 'object' && meta === undefined) {
+    // Old signature: file.setMeta(meta)
+    meta = id;
+    id = meta.id;
+  }
+  
+  // Ensure meta is an object
+  meta = meta || {};
+  meta.id = id;
   meta.lastAccessTime = new Date();
   return storage.files.setMeta(meta);
 };

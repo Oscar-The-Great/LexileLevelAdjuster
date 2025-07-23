@@ -1,0 +1,105 @@
+/* Hard Words Sidebar Styles */
+.hard-words-sidebar {
+  position: fixed;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  width: 250px;
+  background-color: var(--background-color-secondary, #f5f5f5);
+  border-left: 1px solid var(--border-color, #ddd);
+  padding: 15px;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 100;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Courier New', monospace; /* Retro typewriter font */
+}
+
+.hard-words-sidebar.collapsed {
+  transform: translateX(250px);
+}
+
+.hard-words-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color, #ddd);
+}
+
+.hard-words-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-color, #333);
+}
+
+.toggle-sidebar-btn {
+  position: absolute;
+  left: -30px;
+  top: 10px;
+  background-color: var(--background-color-secondary, #f5f5f5);
+  border: 1px solid var(--border-color, #ddd);
+  border-right: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px 0 0 4px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  color: var(--text-color, #333);
+}
+
+.hard-words-list {
+  margin-top: 10px;
+}
+
+.word-item {
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-color, #ddd);
+}
+
+.word-item .word {
+  font-weight: bold;
+  color: var(--accent-color, #8B4513); /* Sepia-toned color for retro feel */
+  margin-bottom: 4px;
+}
+
+.word-item .definition {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-color, #333);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hard-words-sidebar {
+    width: 200px;
+  }
+  
+  .hard-words-sidebar.collapsed {
+    transform: translateX(200px);
+  }
+}
+
+/* Dark theme adjustments */
+.dark-theme .hard-words-sidebar {
+  background-color: var(--background-color-secondary, #2a2a2a);
+  border-color: var(--border-color, #444);
+}
+
+.dark-theme .toggle-sidebar-btn {
+  background-color: var(--background-color-secondary, #2a2a2a);
+  border-color: var(--border-color, #444);
+}
+
+.dark-theme .word-item {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: var(--border-color, #444);
+}
+
+.dark-theme .word-item .word {
+  color: var(--accent-color, #d4a76a); /* Amber color for dark theme */
+}
+{{ ... }}
