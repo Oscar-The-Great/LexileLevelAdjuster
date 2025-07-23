@@ -7,9 +7,9 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from './data/config.js';
-import i18n from './i18n/i18n.js';
-import './page/common.js';
+import config from '../../data/config.js';
+import i18n from '../../i18n/i18n.js';
+import '../page/common.js';
 
 // Initialize the application
 (async function() {
@@ -26,11 +26,11 @@ import './page/common.js';
   // Setup service worker
   if ('serviceWorker' in navigator) {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js', {
-        scope: './'
+      const reg = await navigator.serviceWorker.register('../worker/sw.js', {
+        scope: '../'
       });
       if (reg) {
-        reg.update();
+        console.log('Service worker registered successfully on welcome page.');
       }
     } catch (error) {
       // Service Worker may be rejected due to not supported, privacy setting, etc.
@@ -40,6 +40,6 @@ import './page/common.js';
   
   // Add event listener for the start button
   document.getElementById('start-button').addEventListener('click', function() {
-    window.location.href = './list.html';
+    window.location.href = '../pages/list.html';
   });
 })();

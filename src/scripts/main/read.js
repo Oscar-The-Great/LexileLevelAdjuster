@@ -7,16 +7,16 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from './data/config.js';
-import file from './data/file.js';
-import template from './ui/util/template.js';
-import './page/common.js';
-import onResize from './ui/util/onresize.js';
-import wakelock from './ui/util/wakelock.js';
+import config from '../../data/config.js';
+import file from '../../data/file.js';
+import template from '../ui/util/template.js';
+import '../page/common.js';
+import onResize from '../ui/util/onresize.js';
+import wakelock from '../ui/util/wakelock.js';
 
 // Import JumpPage dependencies manually to avoid circular import
-import RangeInput from './ui/component/range.js';
-import dom from './ui/util/dom.js';
+import RangeInput from '../ui/component/range.js';
+import dom from '../ui/util/dom.js';
 
 /**
  * Simplified JumpPage class to avoid circular dependency
@@ -201,55 +201,32 @@ class ReadPageController {
    * Create navigation header
    */
   async createHeader(fileId) {
-    console.log('🔧 Creating navigation header');
-    
     try {
-      // Create header using template system - no need to check DOM
-      // as templates are stored in the allTemplates Map in template.js
-      const header = template.create('header');
-      const headerElement = header.get('root');
+      // Create header with back and config buttons
+      const headerRef = template.create('header');
+      this.container.insertBefore(headerRef.get('root'), this.container.firstChild);
       
-      // Create back button
-      const backButton = document.createElement('button');
-      backButton.type = 'button';
-      backButton.className = 'icon-button';
-      backButton.setAttribute('aria-label', 'Back to list');
-      
-      const backIcon = document.createElement('span');
-      backIcon.className = 'icon';
-      backIcon.textContent = '←';
-      backButton.appendChild(backIcon);
-      
+      // Back button
+      const backButton = template.iconButton('back', 'Back to List');
       backButton.addEventListener('click', () => {
-        this.gotoList();
+        window.location.href = '../pages/list.html';
       });
+      headerRef.get('left').appendChild(backButton);
       
-      // Create config button
-      const configButton = document.createElement('button');
-      configButton.type = 'button';
-      configButton.className = 'icon-button';
-      configButton.setAttribute('aria-label', 'Configuration');
-      
-      const configIcon = document.createElement('span');
-      configIcon.className = 'icon';
-      configIcon.textContent = '⚙️';
-      configButton.appendChild(configIcon);
-      
+      // Config button
+      const configButton = template.iconButton('settings', 'Settings');
       configButton.addEventListener('click', () => {
-        window.location.href = `./config.html?returnTo=read&fileId=${fileId}`;
+        window.location.href = `../pages/config.html?returnTo=read&fileId=${fileId}`;
       });
+      headerRef.get('right').appendChild(configButton);
       
-      // Add buttons to header
-      header.get('left').appendChild(backButton);
-      header.get('right').appendChild(configButton);
+      // Set header title
+      headerRef.get('mid').textContent = 'Reading';
       
-      // Add header to page
-      this.container.insertBefore(headerElement, this.container.firstChild);
-      
-      console.log('✅ Navigation header created');
+      return true;
     } catch (error) {
-      console.error('❌ Failed to create header:', error);
-      throw new Error(`Failed to create header: ${error.message}`);
+      console.error('Error creating header:', error);
+      return false;
     }
   }
 
@@ -604,7 +581,7 @@ class ReadPageController {
   }
 
   // Navigation methods
-  gotoList() { window.location.href = './list.html'; }
+  gotoList() { window.location.href = '../pages/list.html'; }
   
   // File sharing methods
   canShareFile() {
@@ -646,3 +623,17 @@ class ReadPageController {
 // Initialize the read page controller
 const readPageController = new ReadPageController();
 readPageController.initialize();
+
+// Setup service worker
+if ('serviceWorker' in navigator) {
+  try {
+    const reg = await navigator.serviceWorker.register('../worker/sw.js', {
+      scope: '../'
+    });
+    if (reg) {
+      console.log('Service worker registered successfully on read page.');
+    }
+  } catch (error) {
+    console.warn('Service worker registration failed:', error);
+  }
+}

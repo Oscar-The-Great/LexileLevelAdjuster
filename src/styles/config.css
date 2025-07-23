@@ -83,6 +83,18 @@
   fill: currentColor;
 }
 
+/* Add specific styling for back button SVG */
+.back-button .icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--on-surface, #2c3e50);
+  display: block;
+}
+
+.dark-theme .back-button .icon {
+  fill: var(--on-surface, #e8e8e8);
+}
+
 /* Content area */
 .content {
   flex: 1;

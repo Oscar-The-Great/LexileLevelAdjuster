@@ -7,10 +7,10 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from './data/config.js';
-import i18n from './i18n/i18n.js';
-import template from './ui/util/template.js';
-import theme from './theme/theme.js';
+import config from '../../data/config.js';
+import i18n from '../../i18n/i18n.js';
+import template from '../ui/util/template.js';
+import theme from '../theme/theme.js';
 
 // Initialize the application
 (async function() {
@@ -75,7 +75,7 @@ import theme from './theme/theme.js';
           
           setTimeout(() => {
             // Navigate back to list page after a brief delay
-            window.location.href = './list.html';
+            window.location.href = '../pages/list.html';
           }, 1000);
           
         } catch (error) {
@@ -96,12 +96,12 @@ import theme from './theme/theme.js';
         // Handle back navigation based on returnTo parameter
         if (returnTo === 'read') {
           if (fileId) {
-            window.location.href = `./read.html?fileId=${fileId}`;
+            window.location.href = `../pages/read.html?fileId=${fileId}`;
           } else {
-            window.location.href = './list.html';
+            window.location.href = '../pages/list.html';
           }
         } else {
-          window.location.href = './list.html'; // Default back to list page
+          window.location.href = '../pages/list.html'; // Default back to list page
         }
       });
     }
@@ -109,8 +109,8 @@ import theme from './theme/theme.js';
     // Setup service worker
     if ('serviceWorker' in navigator) {
       try {
-        const reg = await navigator.serviceWorker.register('./sw.js', {
-          scope: './'
+        const reg = await navigator.serviceWorker.register('../worker/sw.js', {
+          scope: '../'
         });
         if (reg) {
           console.log('Service worker registered successfully on config page.');
@@ -126,7 +126,7 @@ import theme from './theme/theme.js';
       <h1>Error Loading Configuration Page</h1>
       <p>There was an error initializing the configuration page:</p>
       <pre>${error.message || error}</pre>
-      <p><a href="./list.html">Return to List Page</a></p>
+      <p><a href="../pages/list.html">Return to List Page</a></p>
     </div>`;
   }
 })();

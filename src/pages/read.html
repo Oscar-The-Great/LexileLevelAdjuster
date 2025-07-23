@@ -18,7 +18,7 @@ defined by the Mozilla Public License, v. 2.0.
 <meta property="og:locale:alternate" content="zh_TW" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-<link rel="manifest" href="manifest.webmanifest" />
+<link rel="manifest" href="../manifest.webmanifest" />
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="application-name" content="Lexile Level Adjuster">
@@ -26,13 +26,13 @@ defined by the Mozilla Public License, v. 2.0.
 <meta name="msapplication-starturl" content="./">
 <meta name="theme-color" content="black">
 
-<link rel="icon" href="./icon/icon.ico" sizes="32x32 48x48 512x512 64x64 72x72 96x96 128x128" type="image/x-icon" />
-<link rel="icon" href="./icon/icon.png" sizes="512x512" type="image/png" />
-<link rel="icon" href="./icon/icon.svg" sizes="any" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="./icon/icon.png" sizes="512x512" type="image/png" />
+<link rel="icon" href="../assets/icons/icon.ico" sizes="32x32 48x48 512x512 64x64 72x72 96x96 128x128" type="image/x-icon" />
+<link rel="icon" href="../assets/icons/icon.png" sizes="512x512" type="image/png" />
+<link rel="icon" href="../assets/icons/icon.svg" sizes="any" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="../assets/icons/icon.png" sizes="512x512" type="image/png" />
 
-<link rel="stylesheet" href="./css/normalize-8.0.1.css" />
-<link rel="stylesheet" href="./css/index.css" />
+<link rel="stylesheet" href="../styles/normalize-8.0.1.css" />
+<link rel="stylesheet" href="../styles/index.css" />
 
 <style id="custom_font"></style>
 <style id="custom_style"></style>
@@ -196,7 +196,7 @@ defined by the Mozilla Public License, v. 2.0.
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: './' })
+        navigator.serviceWorker.register('../worker/sw.js', { scope: '../' })
           .then(registration => {
             console.log('Service Worker registered with scope:', registration.scope);
           })
@@ -207,6 +207,6 @@ defined by the Mozilla Public License, v. 2.0.
     }
   </script>
 
-  <script src="./js/read.js" type="module"></script>
+  <script src="../scripts/main/read.js" type="module"></script>
 </body>
 </html>

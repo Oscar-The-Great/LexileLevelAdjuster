@@ -7,15 +7,15 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from './data/config.js';
-import i18n from './i18n/i18n.js';
-import file from './data/file.js';
-import text from './text/text.js';
-import template from './ui/util/template.js';
-import dom from './ui/util/dom.js';
-import ItemList from './ui/component/itemlist.js';
-import Menu from './ui/component/menu.js';
-import './page/common.js';
+import config from '../../data/config.js';
+import i18n from '../../i18n/i18n.js';
+import file from '../../data/file.js';
+import text from '../text/text.js';
+import template from '../ui/util/template.js';
+import dom from '../ui/util/dom.js';
+import ItemList from '../ui/component/itemlist.js';
+import Menu from '../ui/component/menu.js';
+import '../page/common.js';
 
 // Global variables for list functionality
 let fileButton, fileListContainer, fileListElement, fileListSensor, fileListTop;
@@ -70,8 +70,8 @@ const sortKey = {
   // Setup service worker
   if ('serviceWorker' in navigator) {
     try {
-      const reg = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/'
+      const reg = await navigator.serviceWorker.register('../worker/sw.js', {
+        scope: '../'
       });
       if (reg) {
         reg.update();
@@ -116,7 +116,7 @@ async function initializeUI() {
 
 function setupEventListeners() {
   // Add button - opens file picker
-  addButton.addEventListener('click', event => {
+  addButton.addEventListener('click', () => {
     fileButton.click();
   });
   
@@ -130,8 +130,8 @@ function setupEventListeners() {
   });
   
   // Config button - navigate to config
-  configButton.addEventListener('click', event => {
-    window.location.href = './config.html?returnTo=list';
+  configButton.addEventListener('click', () => {
+    window.location.href = '../pages/config.html';
   });
   
   // Search input focus - scroll to top
@@ -185,9 +185,9 @@ function setupEventListeners() {
   window.addEventListener('pageNavigation', event => {
     if (event.detail.page === 'read') {
       const fileId = event.detail.fileId;
-      window.location.href = `./read.html?fileId=${fileId}`;
+      window.location.href = `../pages/read.html?fileId=${fileId}`;
     } else if (event.detail.page === 'config') {
-      window.location.href = './config.html?returnTo=list';
+      window.location.href = '../pages/config.html';
     }
   });
 }
@@ -398,7 +398,7 @@ async function updateList() {
   };
   
   const onItemClick = file => {
-    window.location.href = `./read.html?fileId=${file.id}`;
+    window.location.href = `../pages/read.html?fileId=${file.id}`;
   };
   
   const onRemove = async (item, index) => {

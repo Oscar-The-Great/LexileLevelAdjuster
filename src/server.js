@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Special handling for service worker
 app.get('/sw.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'sw.js'));
+  res.sendFile(path.join(__dirname, 'worker/sw.js'));
 });
 
 // File storage in memory for development (replace with database in production)
