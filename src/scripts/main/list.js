@@ -7,9 +7,9 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from '../../data/config.js';
-import i18n from '../../i18n/i18n.js';
-import file from '../../data/file.js';
+import config from '../data/config.js';
+import i18n from '../i18n/i18n.js';
+import file from '../data/file.js';
 import text from '../text/text.js';
 import template from '../ui/util/template.js';
 import dom from '../ui/util/dom.js';
@@ -208,143 +208,40 @@ async function importFile(item) {
   try {
     const content = await text.readFile(item);
     
-    // Check if this is a Lexile level adjustment request
-    if (content.includes('LEXILE_ADJUST:')) {
-      // Extract the target Lexile level and passage
-      const lines = content.split('\n');
-      let targetLevel = null;
-      let passage = '';
-      let inPassage = false;
-      
-      for (const line of lines) {
-        if (line.startsWith('LEXILE_ADJUST:')) {
-          targetLevel = parseInt(line.split(':')[1].trim());
-        } else if (line.startsWith('PASSAGE:')) {
-          inPassage = true;
-        } else if (inPassage) {
-          passage += line + '\n';
-        }
-      }
-      
-      if (targetLevel && passage.trim()) {
-        // Call Lexile adjustment API
-        const response = await fetch('/api/adjust-lexile', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            passage: passage.trim(),
-            target_level: targetLevel
-          })
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          const adjusted_passage = data.adjusted_passage;
-          
-          // Display the results
-          const resultContainer = document.createElement('div');
-          resultContainer.id = 'lexile-results';
-          resultContainer.innerHTML = `
-            <h3>Lexile Level Adjustment Results</h3>
-            <p><strong>Target Level:</strong> ${targetLevel}L</p>
-            <p><strong>Original Level:</strong> ${data.original_level}L</p>
-            <p><strong>Adjusted Level:</strong> ${data.adjusted_level}L</p>
-            <div>
-              <h4>Adjusted Passage:</h4>
-              <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; background: #f9f9f9;">
-                ${adjusted_passage.replace(/\n/g, '<br>')}
-              </div>
-            </div>
-          `;
-          
-          // Remove any existing results
-          const existingResults = document.getElementById('lexile-results');
-          if (existingResults) {
-            existingResults.remove();
-          }
-          
-          // Append the results to the file list container
-          fileListContainer.insertBefore(resultContainer, fileListTop);
-          
-          // Process the adjusted content
-          const processedContent = await text.preprocess(adjusted_passage);
-          const raw_title = text.parseFilename(item.name) + ` (Lexile ${data.adjusted_level}L)`;
-          const title = await text.preprocess(raw_title);
-          
-          // Save file metadata and content to server
-          const serverResponse = await fetch('/api/files', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              title,
-              content: processedContent,
-              createTime: new Date().toISOString(),
-              lastAccessTime: new Date().toISOString(),
-              length: processedContent.length
-            })
-          });
-          
-          if (serverResponse.ok) {
-            const fileData = await serverResponse.json();
-            result = fileData;
-            // Still save minimal metadata locally for listing
-            await file.add({ 
-              title, 
-              createTime: new Date(), 
-              lastAccessTime: new Date(), 
-              length: processedContent.length,
-              id: fileData.id,
-              serverStored: true
-            }, ''); // Empty content as it's stored on server
-          } else {
-            throw new Error('Failed to save file to server');
-          }
-        } else {
-          throw new Error('Failed to adjust Lexile level');
-        }
-      } else {
-        throw new Error('Invalid Lexile adjustment format');
-      }
+    // Regular file processing
+    const processedContent = await text.preprocess(content);
+    const raw_title = text.parseFilename(item.name);
+    const title = await text.preprocess(raw_title);
+    
+    // Save file metadata and content to server
+    const serverResponse = await fetch('/api/files', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        content: processedContent,
+        createTime: new Date().toISOString(),
+        lastAccessTime: new Date().toISOString(),
+        length: processedContent.length
+      })
+    });
+    
+    if (serverResponse.ok) {
+      const fileData = await serverResponse.json();
+      result = fileData;
+      // Still save minimal metadata locally for listing
+      await file.add({ 
+        title, 
+        createTime: new Date(), 
+        lastAccessTime: new Date(), 
+        length: processedContent.length,
+        id: fileData.id,
+        serverStored: true
+      }, ''); // Empty content as it's stored on server
     } else {
-      // Regular file processing
-      const processedContent = await text.preprocess(content);
-      const raw_title = text.parseFilename(item.name);
-      const title = await text.preprocess(raw_title);
-      
-      // Save file metadata and content to server
-      const serverResponse = await fetch('/api/files', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          content: processedContent,
-          createTime: new Date().toISOString(),
-          lastAccessTime: new Date().toISOString(),
-          length: processedContent.length
-        })
-      });
-      
-      if (serverResponse.ok) {
-        const fileData = await serverResponse.json();
-        result = fileData;
-        // Still save minimal metadata locally for listing
-        await file.add({ 
-          title, 
-          createTime: new Date(), 
-          lastAccessTime: new Date(), 
-          length: processedContent.length,
-          id: fileData.id,
-          serverStored: true
-        }, ''); // Empty content as it's stored on server
-      } else {
-        throw new Error('Failed to save file to server');
-      }
+      throw new Error('Failed to save file to server');
     }
   } catch (e) {
     console.error('Import error:', e);

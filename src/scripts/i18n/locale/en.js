@@ -60,6 +60,7 @@ export default {
   configMode: 'View Mode',
   configModeFlip: 'Flip',
   configModeScroll: 'Scroll',
+  configAppearanceGroupTitle: 'Appearance',
   configThemeGroupTitle: 'Theme',
   configTheme: 'Theme',
   configThemeAuto: 'Auto',
@@ -122,6 +123,8 @@ export default {
   configAutoLockNormal: 'Device Default',
   configAutoLockSpeech: 'Disable During Speech',
   configAutoLockDisable: 'Disable Always',
+  configReadingGroupTitle: 'Reading Settings',
+  configLexileLevel: 'Lexile Level',
   configHelpGroupTitle: 'Help',
   configHelpTopic: 'Help',
   configHelpFilename: 'en.html',
@@ -134,7 +137,9 @@ export default {
   configExpertGroupTitle: 'Expert',
   configExpert: 'Expert Config',
   configExpertDescription: "Please leave blank if you don't know what you are doing. Options misconfigured may lead the reader to stop working.",
-
+  
+  configSave: 'Save Configuration',
+  
   buttonRemove: 'Remove',
   buttonBack: 'Back',
   buttonAdd: 'Import File',

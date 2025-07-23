@@ -7,10 +7,8 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from '../../data/config.js';
-import i18n from '../../i18n/i18n.js';
-import template from '../ui/util/template.js';
-import theme from '../theme/theme.js';
+import config from '../data/config.js';
+import i18n from '../i18n/i18n.js';
 
 // Initialize the application
 (async function() {
@@ -60,12 +58,39 @@ import theme from '../theme/theme.js';
       });
     }
     
+    // Set up Lexile Level input
+    const lexileLevelInput = document.getElementById('lexile_level');
+    if (lexileLevelInput) {
+      // Set current Lexile Level value
+      const currentLexileLevel = await config.get('lexileLevel', 850); // Default to 850 if not set
+      lexileLevelInput.value = currentLexileLevel;
+      
+      // Add event listener for Lexile Level changes
+      lexileLevelInput.addEventListener('change', async () => {
+        // Ensure the value is within valid range
+        let value = parseInt(lexileLevelInput.value, 10);
+        if (isNaN(value)) value = 850; // Default if invalid
+        if (value < 0) value = 0;
+        if (value > 2000) value = 2000;
+        
+        lexileLevelInput.value = value; // Update input with sanitized value
+        await config.set('lexileLevel', value);
+        console.log(`Lexile Level changed to ${value}`);
+      });
+    }
+    
     // Set up save button
     const saveButton = document.getElementById('save_config_button');
     if (saveButton) {
       saveButton.addEventListener('click', async () => {
         try {
           // Save current configuration (already saved when changed, but this confirms it)
+          // For Lexile Level, ensure it's saved before navigating away
+          if (lexileLevelInput) {
+            const lexileLevel = parseInt(lexileLevelInput.value, 10) || 850;
+            await config.set('lexileLevel', lexileLevel);
+          }
+          
           console.log('Configuration saved successfully');
           
           // Show success message briefly

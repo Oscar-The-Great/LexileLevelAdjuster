@@ -7,8 +7,8 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from '../../data/config.js';
-import i18n from '../../i18n/i18n.js';
+import config from '../data/config.js';
+import i18n from '../i18n/i18n.js';
 import '../page/common.js';
 
 // Initialize the application

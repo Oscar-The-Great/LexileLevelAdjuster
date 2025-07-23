@@ -7,8 +7,8 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
-import config from '../../data/config.js';
-import file from '../../data/file.js';
+import config from '../data/config.js';
+import file from '../data/file.js';
 import template from '../ui/util/template.js';
 import '../page/common.js';
 import onResize from '../ui/util/onresize.js';

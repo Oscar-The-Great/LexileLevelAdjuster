@@ -61,6 +61,7 @@ export default {
   configMode: '閱讀模式',
   configModeFlip: '翻頁',
   configModeScroll: '捲動',
+  configAppearanceGroupTitle: '外觀',
   configThemeGroupTitle: '主題',
   configTheme: '主題',
   configThemeAuto: '自動',
@@ -123,6 +124,8 @@ export default {
   configAutoLockNormal: '裝置預設',
   configAutoLockSpeech: '朗讀時停用',
   configAutoLockDisable: '永遠停用',
+  configReadingGroupTitle: '閱讀設定',
+  configLexileLevel: '藍思指數',
   configHelpGroupTitle: '說明',
   configHelpTopic: '說明',
   configHelpFilename: 'en.html',
@@ -135,6 +138,8 @@ export default {
   configExpertGroupTitle: '專家',
   configExpert: '專家設定',
   configExpertDescription: '若您不清楚如何填寫，請將此處留空。錯誤設定會導致閱讀器無法使用。',
+
+  configSave: '儲存設定',
 
   buttonRemove: '刪除',
   buttonBack: '返回',

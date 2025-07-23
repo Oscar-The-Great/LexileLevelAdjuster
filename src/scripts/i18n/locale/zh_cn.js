@@ -60,6 +60,7 @@ export default {
   configMode: '阅读模式',
   configModeFlip: '翻页',
   configModeScroll: '滚动',
+  configAppearanceGroupTitle: '外观',
   configThemeGroupTitle: '主题',
   configTheme: '主题',
   configThemeAuto: '自动',
@@ -122,6 +123,8 @@ export default {
   configAutoLockNormal: '设备默认',
   configAutoLockSpeech: '朗读时禁用',
   configAutoLockDisable: '始终禁用',
+  configReadingGroupTitle: '阅读设置',
+  configLexileLevel: '蓝思指数',
   configHelpGroupTitle: '帮助',
   configHelpTopic: '帮助',
   configHelpFilename: 'zh_cn.html',
@@ -157,4 +160,5 @@ export default {
   readFontFail: '无法打开字体文件\n您的浏览器可能不支持该字体文件类型',
   listImportFail: '读取文本时发生错误\n文本可能使用了不支持的字符编码',
   storageOpenFail: '无法访问设备的存储\ntReader 需要访问存储以正常工作\n这可能是因为您启用了浏览器的无痕（隐私）模式或您的浏览器版本不受支持',
+  configSave: '保存设置',
 };
